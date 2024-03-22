@@ -43,7 +43,7 @@ body, html {
   font-size: 24px; /* Adjust font size as needed */
   text-align: center;
   padding: 10px;
-  padding-bottom 5px;
+  padding-bottom 
   color: white; /* Set text color to white */
    /* Font options */
   text-shadow: 2px 2px 4px #000000;
@@ -102,11 +102,13 @@ body, html {
   80%{color: DeepPink;}
   90%{color: DodgerBlue;}
 	100%{color: orange;}
+  font-family: 'Silkscreen', monospace;
+  font-size: 24px; /* Adjust font size as needed */
+  text-align: center;
+  padding: 10px;
+  color: white; /* Set text color to white */
 }
 
-.container{
-  box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
-}
 
 
 .icon-container {
