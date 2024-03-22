@@ -8,9 +8,9 @@ let gameOver = false;
 let highScore;
 
 function preload() {
-  birdImage = loadImage('https://cdn.discordapp.com/attachments/887521357548638249/1220523800698028113/puff2.png?ex=660f405e&is=65fccb5e&hm=1419d100daa64a536b0c87c53b1acdf3d81967ce38147bef451a8d79a7c5dc97&');
-  topPipeImage = loadImage('https://cdn.discordapp.com/attachments/887521357548638249/1220573506463465603/top.png?ex=660f6ea9&is=65fcf9a9&hm=f0affea109fb5c9ed1fa7172f4e08c2b63950479f5f5620251d11b69094bad3c&');
-  bottomPipeImage = loadImage('https://cdn.discordapp.com/attachments/887521357548638249/1220571772957626429/bottom.png?ex=660f6d0b&is=65fcf80b&hm=7a1b18f8a8409436c6d2722c0d6f9baf13046d7861f463e8910c27b83007ac8c&');
+  birdImage = loadImage('puff2-min.png');
+  topPipeImage = loadImage('top-min.png');
+  bottomPipeImage = loadImage('bottom-min.png');
 }
 
 function setup() {
