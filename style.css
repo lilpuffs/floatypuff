@@ -1,0 +1,69 @@
+/* style.css */
+@font-face {
+  font-family: "Silkscreen", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+body {
+  font-family: 'Silkscreen', sans-serif;
+  background: black;
+
+}
+
+html {
+      overflow: hidden;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    font-family: "Silkscreen", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+    cursor: crosshair;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.centered-text {
+  font-family: 'Silkscreen', monospace;
+  font-size: 24px; /* Adjust font size as needed */
+  text-align: center;
+  padding: 10px;
+  color: white; /* Set text color to white */
+}
+
+
+
+.icon-container {
+  display: inline-block; /* Make the container inline */
+  animation: floatAnimation 1.5s infinite alternate; /* Apply animation to the container */
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-5px); /* Adjust the distance to float */
+  }
+}
+
+.icon {
+  width: 24px; /* Adjust icon size as needed */
+  height: 24px; /* Adjust icon size as needed */
+  vertical-align: middle; /* Align icon vertically */
+}
