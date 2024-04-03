@@ -200,6 +200,7 @@ function resetGame() {
 
 
 
+
 class Bird {
   constructor() {
     this.y = height / 2;
