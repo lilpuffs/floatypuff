@@ -162,10 +162,9 @@ function resetGame() {
   bird = new Bird();
   gameOver = false;
 
-  // Retrieve the stored high score from the cookie
-  let storedHighScore = getCookie("highScore");
+  let storedHighScore = getCookie("highScore"); // Get the stored high score
 
-  // Convert storedHighScore to a number, defaulting to 0 if it's null or not a valid number
+  // Convert storedHighScore to a number, or default to 0 if it's null
   storedHighScore = storedHighScore ? parseInt(storedHighScore) : 0;
 
   // Check if the current score is higher than the stored high score
@@ -181,7 +180,7 @@ function resetGame() {
         return db.collection('users').doc(user.uid).set({
           username: username,
           highScore: storedHighScore,
-          score: score
+          score: score // Add the current score to Firestore
         });
       })
       .then(() => {
