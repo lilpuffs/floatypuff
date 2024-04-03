@@ -20,9 +20,9 @@ let gameOver = false;
 let highScore;
 
 function preload() {
-  birdImage = loadImage('https://cdn.discordapp.com/attachments/887521357548638249/1220523800698028113/puff2.png?ex=660f405e&is=65fccb5e&hm=1419d100daa64a536b0c87c53b1acdf3d81967ce38147bef451a8d79a7c5dc97&');
-  topPipeImage = loadImage('https://cdn.discordapp.com/attachments/887521357548638249/1220573506463465603/top.png?ex=660f6ea9&is=65fcf9a9&hm=f0affea109fb5c9ed1fa7172f4e08c2b63950479f5f5620251d11b69094bad3c&');
-  bottomPipeImage = loadImage('https://cdn.discordapp.com/attachments/887521357548638249/1220571772957626429/bottom.png?ex=660f6d0b&is=65fcf80b&hm=7a1b18f8a8409436c6d2722c0d6f9baf13046d7861f463e8910c27b83007ac8c&');
+  birdImage = loadImage('puff2-min.png');
+  topPipeImage = loadImage('top-min.png');
+  bottomPipeImage = loadImage('bottom-min.png');
 }
 
 function setup() {
@@ -73,7 +73,6 @@ function draw() {
     if (score > highScore) {
       highScore = score;
       setCookie("highScore", highScore, 365);
-            updateFirestoreHighScore(username, highScore); // Update Firestore
     }
 
     displayScores();
@@ -96,8 +95,6 @@ function displayScores() {
   text(highScoreText, width / 2 - highScoreTextWidth / 2, 50);
 }
 
-let username = null;
-
 function displayGameOver() {
   fill(255, 0, 0);
   textSize(26);
@@ -112,51 +109,7 @@ function displayGameOver() {
   let scoreText = "Your Score: " + score;
   let scoreTextWidth = textWidth(scoreText);
   text(scoreText, width / 2 - scoreTextWidth / 18, height / 2 + 150);
-
-  // Prompt for username input only if the game is over and username is not set
-  if (gameOver && !username) {
-    username = prompt("Enter your username");
-    handleFormSubmit(username);
-  }
 }
-
-function updateFirestoreHighScore(username, highScore) {
-  firebase.auth().signInAnonymously()
-    .then((userCredential) => {
-      const user = userCredential.user;
-      return db.collection('users').doc(user.uid).set({
-        username: username,
-        highScore: highScore
-      });
-    })
-    .then(() => {
-      console.log('High score updated in Firestore');
-    })
-    .catch((error) => {
-      console.error('Error updating high score in Firestore:', error);
-    });
-}
-
-function handleFormSubmit(username) {
-  // Sign in anonymously and save the username and high score
-  firebase.auth().signInAnonymously()
-    .then((user) => {
-      console.log('Logged in as anonymous');
-      return db.collection('users').doc(user.uid).set({
-        username: username,
-        highScore: highScore
-      });
-    })
-    .then(() => {
-      console.log('Username and high score saved');
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(`Error: ${errorCode}, ${errorMessage}`);
-    });
-}
-
 
 function mousePressed() {
   if (!gameOver) {
@@ -177,45 +130,9 @@ function keyPressed() {
 function resetGame() {
   pipes = [];
   bird = new Bird();
-  gameOver = false;
-
-  // Retrieve the stored high score from the cookie
-  let storedHighScore = getCookie("highScore");
-
-  // Convert storedHighScore to a number, defaulting to 0 if it's null or not a valid number
-  storedHighScore = storedHighScore ? parseInt(storedHighScore) : 0;
-
-  // Check if the current score is higher than the stored high score
-  if (score > storedHighScore) {
-    // Update the stored high score
-    storedHighScore = score;
-    setCookie("highScore", storedHighScore, 365);
-
-    // Sign in anonymously and save the username, high score, and current score to Firestore
-    firebase.auth().signInAnonymously()
-      .then((user) => {
-        console.log('Logged in as anonymous');
-        return db.collection('users').doc(user.uid).set({
-          username: username,
-          highScore: storedHighScore,
-          score: score
-        });
-      })
-      .then(() => {
-        console.log('Username and score saved');
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(`Error: ${errorCode}, ${errorMessage}`);
-      });
-  }
-
-  // Reset the score to 0
   score = 0;
+  gameOver = false;
 }
-
-
 
 class Bird {
   constructor() {
