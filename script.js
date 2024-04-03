@@ -73,6 +73,7 @@ function draw() {
     if (score > highScore) {
       highScore = score;
       setCookie("highScore", highScore, 365);
+            updateFirestoreHighScore(username, highScore); // Update Firestore
     }
 
     displayScores();
@@ -119,6 +120,22 @@ function displayGameOver() {
   }
 }
 
+function updateFirestoreHighScore(username, highScore) {
+  firebase.auth().signInAnonymously()
+    .then((userCredential) => {
+      const user = userCredential.user;
+      return db.collection('users').doc(user.uid).set({
+        username: username,
+        highScore: highScore
+      });
+    })
+    .then(() => {
+      console.log('High score updated in Firestore');
+    })
+    .catch((error) => {
+      console.error('Error updating high score in Firestore:', error);
+    });
+}
 
 function handleFormSubmit(username) {
   // Sign in anonymously and save the username and high score
@@ -197,7 +214,6 @@ function resetGame() {
   // Reset the score to 0
   score = 0;
 }
-
 
 
 
