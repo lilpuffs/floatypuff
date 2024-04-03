@@ -162,11 +162,17 @@ function resetGame() {
   bird = new Bird();
   gameOver = false;
 
-  // Check if the current score is higher than the previous high score
-  if (score > highScore) {
-    // Update the high score
-    highScore = score;
-    setCookie("highScore", highScore, 365);
+  // Retrieve the stored high score from the cookie
+  let storedHighScore = getCookie("highScore");
+
+  // Convert storedHighScore to a number, defaulting to 0 if it's null or not a valid number
+  storedHighScore = storedHighScore ? parseInt(storedHighScore) : 0;
+
+  // Check if the current score is higher than the stored high score
+  if (score > storedHighScore) {
+    // Update the stored high score
+    storedHighScore = score;
+    setCookie("highScore", storedHighScore, 365);
 
     // Sign in anonymously and save the username, high score, and current score to Firestore
     firebase.auth().signInAnonymously()
@@ -174,8 +180,8 @@ function resetGame() {
         console.log('Logged in as anonymous');
         return db.collection('users').doc(user.uid).set({
           username: username,
-          highScore: highScore,
-          score: score // Add the current score to Firestore
+          highScore: storedHighScore,
+          score: score
         });
       })
       .then(() => {
